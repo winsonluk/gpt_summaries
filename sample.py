@@ -6,8 +6,8 @@ gpt2.load_gpt2(sess)
 START_P = 0.1
 START_T = 0.2
 
-for i in [x * 0.1 for x in range(0, 10) if (START_P + x * 0.1) <= 1]:
-    for j in [x * 0.2 for x in range(0, 10)]:
+for i in [x * 0.2 for x in range(0, 5) if (START_P + x * 0.1) <= 1]:
+    for j in [x * 0.2 for x in range(0, 8)]:
         print('top_p: ' + str(START_P + i) + '\ntemp: ' + str(START_T + j))
         gpt2.generate(sess,
                 length=180,
@@ -16,5 +16,3 @@ for i in [x * 0.1 for x in range(0, 10) if (START_P + x * 0.1) <= 1]:
                 temperature=START_T + j,
                 prefix="Dotino is a SaaS Project Management Software Compiler.",
                 )
-
-
