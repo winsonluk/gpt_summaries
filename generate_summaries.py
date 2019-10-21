@@ -1,4 +1,3 @@
-import gc
 import re
 import sys
 import gpt_2_simple as gpt2
@@ -16,23 +15,19 @@ with open('io/pitches.txt') as f, open('io/names.txt') as f2:
             continue
         line = line[0].lower() + line[1:]
         line2 = line2[:-1]
-        line = line2 + '\'s mission is ' + line.strip() + '. ' + line2
-        res = []
-        while len(res) < 1:
-            res = gpt2.generate(sess,
-                    nsamples=10,
-                    top_p=0.9,
-                    temperature=1.0,
-                    truncate='\n',
-                    prefix=line,
-                    return_as_list=True,
-                    )
-            print(res)
-            res = [x for x in res if x.count('.') > 1]
-        res[0] = res[0].rsplit('.', 1)[0].strip() + '.\n'
+        line = line2 + '\'s mission is ' + line.strip() + '.'
+        res = gpt2.generate(sess,
+                nsamples=10,
+                top_p=0.9,
+                temperature=1.0,
+                truncate='\n',
+                prefix=line + ' ' + line2,
+                return_as_list=True,
+                )
+        res = sorted([x for x in res if x.count('.') > 1], key=lambda x: len(x), reverse=True)
+        if not res:
+            res.append(line + '\n')
+        else:
+            res[0] = res[0].rsplit('.', 1)[0].strip() + '.\n'
         with open('io/summaries.txt', 'a+') as g:
             g.write(res[0])
-        del line
-        del line2
-        del res
-        gc.collect()
