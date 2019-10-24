@@ -17,7 +17,7 @@ with open('io/pitches.txt') as f, open('io/names.txt') as f2:
         line2 = line2[:-1]
         line = line2 + '\'s mission is ' + line.strip() + '.'
         res = gpt2.generate(sess,
-                nsamples=10,
+                nsamples=5,
                 top_p=0.9,
                 temperature=1.0,
                 truncate='\n',
