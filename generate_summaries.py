@@ -7,7 +7,7 @@ gpt2.load_gpt2(sess)
 
 START = int(sys.argv[1])
 
-with open('io/pitches.txt') as f, open('io/names.txt') as f2:
+with open('io/pitches.txt', 'r') as f, open('io/names.txt', 'r') as f2:
     counter = 0
     for line, line2 in zip(f, f2):
         counter += 1
@@ -30,5 +30,5 @@ with open('io/pitches.txt') as f, open('io/names.txt') as f2:
             res.append(line + '\n')
         else:
             res[0] = res[0].rsplit('.', 1)[0].strip() + '.\n'
-        with open('io/summaries.txt', 'a+') as g:
+        with open('io/summaries.txt', 'a') as g:
             g.write(res[0])
